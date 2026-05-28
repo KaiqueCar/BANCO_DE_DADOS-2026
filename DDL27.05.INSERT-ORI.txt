@@ -1,0 +1,416 @@
+C:\Users\Dell>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 45
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| produtos           |
+| test               |
++--------------------+
+6 rows in set (0.000 sec)
+
+MariaDB [(none)]>
+MariaDB [(none)]> use produtos;
+Database changed
+MariaDB [produtos]>
+MariaDB [produtos]> describe produto;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.013 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe categoria;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.006 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> alter table categoria drop column descricao;
+Query OK, 0 rows affected (0.017 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe categoria;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.004 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> alter table categoria add descricao varchar(255);
+Query OK, 0 rows affected (0.015 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe categoria;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.004 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe produto;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| idproduto    | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria  | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto  | varchar(100)  | NO   |     | NULL    |                |
+| preco        | decimal(10,2) | NO   |     | NULL    |                |
+| qtde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro | date          | NO   |     | NULL    |                |
+| ativo        | bit(1)        | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.006 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> alter table produto change datacadastro datacad DATE;
+Query OK, 0 rows affected (0.099 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe produto;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| idproduto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto | varchar(100)  | NO   |     | NULL    |                |
+| preco       | decimal(10,2) | NO   |     | NULL    |                |
+| qtde        | int(11)       | NO   |     | NULL    |                |
+| datacad     | date          | YES  |     | NULL    |                |
+| ativo       | bit(1)        | NO   |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.005 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> rename table produto to loja;
+Query OK, 0 rows affected (0.027 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> show tables;
++--------------------+
+| Tables_in_produtos |
++--------------------+
+| categoria          |
+| loja               |
++--------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe categoria;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.016 sec)
+
+MariaDB [produtos]> describe produto:
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':' at line 1
+MariaDB [produtos]> describe produto;
+ERROR 1146 (42S02): Table 'produtos.produto' doesn't exist
+MariaDB [produtos]> describe loja;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| idproduto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto | varchar(100)  | NO   |     | NULL    |                |
+| preco       | decimal(10,2) | NO   |     | NULL    |                |
+| qtde        | int(11)       | NO   |     | NULL    |                |
+| datacad     | date          | YES  |     | NULL    |                |
+| ativo       | bit(1)        | NO   |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.015 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) value (1, 'Mouse', 59.90, 30, '2026-05-27',1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`produtos`.`loja`, CONSTRAINT `loja_ibfk_1` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`idcategoria`))
+MariaDB [produtos]> descirbe categoria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'descirbe categoria' at line 1
+MariaDB [produtos]> describe categoria;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| idcategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria   | varchar(100) | NO   |     | NULL    |                |
+| descricao   | varchar(255) | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.015 sec)
+
+MariaDB [produtos]> insert into categoria (categoria, descricao) values ('Eletrônicos','Produtos tecnológicos');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [produtos]> describe loja;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| idproduto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto | varchar(100)  | NO   |     | NULL    |                |
+| preco       | decimal(10,2) | NO   |     | NULL    |                |
+| qtde        | int(11)       | NO   |     | NULL    |                |
+| datacad     | date          | YES  |     | NULL    |                |
+| ativo       | bit(1)        | NO   |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.013 sec)
+
+MariaDB [produtos]> insert into categoria (categoria, descricao) values ('Livros','Descrição do Livro'),
+    -> ('Brinquedos','Descrição do Brinquedo'),
+    -> ('Móveis','Descrição do Móveis'),
+    -> ('Esportes', 'Descrição do Esporte');
+Query OK, 4 rows affected (0.005 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe loja;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| idproduto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto | varchar(100)  | NO   |     | NULL    |                |
+| preco       | decimal(10,2) | NO   |     | NULL    |                |
+| qtde        | int(11)       | NO   |     | NULL    |                |
+| datacad     | date          | YES  |     | NULL    |                |
+| ativo       | bit(1)        | NO   |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.017 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) values (1, 'Mouse eletrônico',59.90, 27, '2026-05-27',1);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [produtos]> select * from loja
+    -> ;
++-----------+-------------+------------------+-------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto      | preco | qtde | datacad    | ativo |
++-----------+-------------+------------------+-------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico | 59.90 |   27 | 2026-05-27 | ?     |
++-----------+-------------+------------------+-------+------+------------+-------+
+1 row in set (0.000 sec)
+
+MariaDB [produtos]> insert inot loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) values (2, 'Bola de Basquete', 99.90, 18, '2026-06-27', 1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) values (2, 'Bola...' at line 1
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) values (2, 'Bola de Basquete', 99.90, 18, '2026-06-27', 1);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [produtos]>     select *from loja;
++-----------+-------------+------------------+-------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto      | preco | qtde | datacad    | ativo |
++-----------+-------------+------------------+-------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico | 59.90 |   27 | 2026-05-27 | ?     |
+|         3 |           2 | Bola de Basquete | 99.90 |   18 | 2026-06-27 | ?     |
++-----------+-------------+------------------+-------+------+------------+-------+
+2 rows in set (0.000 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) values (3, 'Sofá', 4999.90, 67, '2026-05-27', 1);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [produtos]>     select *from loja;
++-----------+-------------+------------------+---------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto      | preco   | qtde | datacad    | ativo |
++-----------+-------------+------------------+---------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico |   59.90 |   27 | 2026-05-27 | ?     |
+|         3 |           2 | Bola de Basquete |   99.90 |   18 | 2026-06-27 | ?     |
+|         4 |           3 | Sofá             | 4999.90 |   67 | 2026-05-27 | ?     |
++-----------+-------------+------------------+---------+------+------------+-------+
+3 rows in set (0.000 sec)
+
+MariaDB [produtos]>     select *from categoria;
++-------------+-------------+------------------------+
+| idcategoria | categoria   | descricao              |
++-------------+-------------+------------------------+
+|           1 | Eletrônicos | Produtos tecnológicos  |
+|           2 | Livros      | Descrição do Livro     |
+|           3 | Brinquedos  | Descrição do Brinquedo |
+|           4 | Móveis      | Descrição do Móveis    |
+|           5 | Esportes    | Descrição do Esporte   |
++-------------+-------------+------------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [produtos]> UPDATE loja
+    -> SET idcategoria = 5
+    -> WHERE idproduto = 3;
+Query OK, 1 row affected (0.006 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]> UPDATE loja
+    -> SET idcategoria = 4
+    -> WHERE idproduto = 4;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [produtos]>     select *from loja;
++-----------+-------------+------------------+---------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto      | preco   | qtde | datacad    | ativo |
++-----------+-------------+------------------+---------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico |   59.90 |   27 | 2026-05-27 | ?     |
+|         3 |           5 | Bola de Basquete |   99.90 |   18 | 2026-06-27 | ?     |
+|         4 |           4 | Sofá             | 4999.90 |   67 | 2026-05-27 | ?     |
++-----------+-------------+------------------+---------+------+------------+-------+
+3 rows in set (0.000 sec)
+
+MariaDB [produtos]>     select *from categoria;
++-------------+-------------+------------------------+
+| idcategoria | categoria   | descricao              |
++-------------+-------------+------------------------+
+|           1 | Eletrônicos | Produtos tecnológicos  |
+|           2 | Livros      | Descrição do Livro     |
+|           3 | Brinquedos  | Descrição do Brinquedo |
+|           4 | Móveis      | Descrição do Móveis    |
+|           5 | Esportes    | Descrição do Esporte   |
++-------------+-------------+------------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [produtos]> describe loja;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| idproduto   | int(11)       | NO   | PRI | NULL    | auto_increment |
+| idcategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto | varchar(100)  | NO   |     | NULL    |                |
+| preco       | decimal(10,2) | NO   |     | NULL    |                |
+| qtde        | int(11)       | NO   |     | NULL    |                |
+| datacad     | date          | YES  |     | NULL    |                |
+| ativo       | bit(1)        | NO   |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.014 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco,qtde, datacad, ativo) values (2, 'O Príncipe' , 129.90, 9, '2026-05-27',1);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [produtos]>     select *from loja;
++-----------+-------------+------------------+---------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto      | preco   | qtde | datacad    | ativo |
++-----------+-------------+------------------+---------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico |   59.90 |   27 | 2026-05-27 | ?     |
+|         3 |           5 | Bola de Basquete |   99.90 |   18 | 2026-06-27 | ?     |
+|         4 |           4 | Sofá             | 4999.90 |   67 | 2026-05-27 | ?     |
+|         5 |           2 | O Príncipe       |  129.90 |    9 | 2026-05-27 | ?     |
++-----------+-------------+------------------+---------+------+------------+-------+
+4 rows in set (0.000 sec)
+
+MariaDB [produtos]>     select *from categoria;
++-------------+-------------+------------------------+
+| idcategoria | categoria   | descricao              |
++-------------+-------------+------------------------+
+|           1 | Eletrônicos | Produtos tecnológicos  |
+|           2 | Livros      | Descrição do Livro     |
+|           3 | Brinquedos  | Descrição do Brinquedo |
+|           4 | Móveis      | Descrição do Móveis    |
+|           5 | Esportes    | Descrição do Esporte   |
++-------------+-------------+------------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco,qtde, datacad, ativo) values (3, 'Carrinho de Controle remoto' , 79.90, 12, '2026-05-27',1);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [produtos]>     select *from categoria;
++-------------+-------------+------------------------+
+| idcategoria | categoria   | descricao              |
++-------------+-------------+------------------------+
+|           1 | Eletrônicos | Produtos tecnológicos  |
+|           2 | Livros      | Descrição do Livro     |
+|           3 | Brinquedos  | Descrição do Brinquedo |
+|           4 | Móveis      | Descrição do Móveis    |
+|           5 | Esportes    | Descrição do Esporte   |
++-------------+-------------+------------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [produtos]>     select *from loja;
++-----------+-------------+-----------------------------+---------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto                 | preco   | qtde | datacad    | ativo |
++-----------+-------------+-----------------------------+---------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico            |   59.90 |   27 | 2026-05-27 | ?     |
+|         3 |           5 | Bola de Basquete            |   99.90 |   18 | 2026-06-27 | ?     |
+|         4 |           4 | Sofá                        | 4999.90 |   67 | 2026-05-27 | ?     |
+|         5 |           2 | O Príncipe                  |  129.90 |    9 | 2026-05-27 | ?     |
+|         6 |           3 | Carrinho de Controle remoto |   79.90 |   12 | 2026-05-27 | ?     |
++-----------+-------------+-----------------------------+---------+------+------------+-------+
+5 rows in set (0.000 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco,qtde, datacad, ativo) values (2, 'Harry Potter' , 79.90, 16, '2026-05-27',1);
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco,qtde, datacad, ativo) values (1, 'Notebook' , 1699.90, 31, '2026-05-27',1);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco,qtde, datacad, ativo) values (3, 'Quebra-Cabeça' , 89.90, 28, '2026-05-27',1);
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco,qtde, datacad, ativo) values (4, 'Mesa' , 599.90, 11, '2026-05-27',1);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [produtos]> insert into loja (idcategoria, nomoproduto, preco, qtde, datacad, ativo) values (3, 'Boneco Batman', 129.90, 6, '2026-05-27',1);
+ERROR 1054 (42S22): Unknown column 'nomoproduto' in 'field list'
+MariaDB [produtos]> insert into loja (idcategoria, nomeproduto, preco, qtde, datacad, ativo) values (3, 'Boneco Batman', 129.90, 6, '2026-05-27',1);
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [produtos]>     select *from categoria;
++-------------+-------------+------------------------+
+| idcategoria | categoria   | descricao              |
++-------------+-------------+------------------------+
+|           1 | Eletrônicos | Produtos tecnológicos  |
+|           2 | Livros      | Descrição do Livro     |
+|           3 | Brinquedos  | Descrição do Brinquedo |
+|           4 | Móveis      | Descrição do Móveis    |
+|           5 | Esportes    | Descrição do Esporte   |
++-------------+-------------+------------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [produtos]>     select *from loja;
++-----------+-------------+-----------------------------+---------+------+------------+-------+
+| idproduto | idcategoria | nomeproduto                 | preco   | qtde | datacad    | ativo |
++-----------+-------------+-----------------------------+---------+------+------------+-------+
+|         2 |           1 | Mouse eletrônico            |   59.90 |   27 | 2026-05-27 | ?     |
+|         3 |           5 | Bola de Basquete            |   99.90 |   18 | 2026-06-27 | ?     |
+|         4 |           4 | Sofá                        | 4999.90 |   67 | 2026-05-27 | ?     |
+|         5 |           2 | O Príncipe                  |  129.90 |    9 | 2026-05-27 | ?     |
+|         6 |           3 | Carrinho de Controle remoto |   79.90 |   12 | 2026-05-27 | ?     |
+|         7 |           2 | Harry Potter                |   79.90 |   16 | 2026-05-27 | ?     |
+|         8 |           1 | Notebook                    | 1699.90 |   31 | 2026-05-27 | ?     |
+|         9 |           3 | Quebra-Cabeça               |   89.90 |   28 | 2026-05-27 | ?     |
+|        10 |           4 | Mesa                        |  599.90 |   11 | 2026-05-27 | ?     |
+|        11 |           3 | Boneco Batman               |  129.90 |    6 | 2026-05-27 | ?     |
++-----------+-------------+-----------------------------+---------+------+------------+-------+
+10 rows in set (0.000 sec)
+
+MariaDB [produtos]>
